@@ -1,0 +1,16 @@
+# custom ignore
+.tags*
+DLLS/
+Doc/
+LICENSE.txt
+Lib/
+NEWS.txt
+README.txt
+Scripts/
+Tools/
+fileutil.pyc
+include/
+libs/
+python.exe
+pythonw.exe
+tcl/
