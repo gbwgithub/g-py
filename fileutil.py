@@ -1,6 +1,7 @@
 #coding=utf-8
 
 import os
+import zipfile
 
 def mkdir(path):
  # 去除首位空格
@@ -63,7 +64,7 @@ def emptyLastLine(filename):
  
 
 # 移除包含item的行，函数返回原来的文件内容
-def removeFileItem(file, item):
+def remove_file_item(file, item):
  input = open(file)
  lines = input.readlines()
  input.close()
@@ -82,7 +83,7 @@ def removeFileItem(file, item):
 
 
 # 以removeFileItem()的返回为参数，还原文件内容
-def restoreFile(file, lines):
+def restore_file(file, lines):
   output = open(file, "w")
   for line in lines:
     if not line:
@@ -91,3 +92,18 @@ def restoreFile(file, lines):
   output.close()
 
 
+# 压缩文件
+def zip(src, dst):
+  zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
+  abs_src = os.path.abspath(src)
+  for dirname, subdirs, files in os.walk(src):
+    # zf.write(dirname)
+    absname = os.path.abspath(dirname)
+    arcname = absname[len(abs_src) + 1:]
+    zf.write(os.path.abspath(dirname), arcname)
+    for filename in files:
+      absname = os.path.abspath(os.path.join(dirname, filename))
+      arcname = absname[len(abs_src) + 1:]
+      # print 'zipping %s as %s' % (os.path.join(dirname, filename), arcname)
+      zf.write(absname, arcname)
+  zf.close()
