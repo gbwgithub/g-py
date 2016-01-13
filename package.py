@@ -5,7 +5,7 @@ import sys
 import time
 import fileutil
 
-print '-------------------- Start ---------------------'
+print '-------------------- BEGIN ---------------------'
 
 TE_DEMO_PATH = "D:\Android\eclipse-adt\workspace\TEDemo"
 TE_SDK_PAGH = "D:\Android\eclipse-adt\workspace\TESDK"
@@ -42,4 +42,4 @@ fileutil.restoreFile(gradle_file, gradle_lines)
 # os.system('am start -n com.huawei.te.example/com.huawei.te.example.activity.LoginActivity')
 
 # fileutil.mkdir(OUTPATH)
-print '-------------------- Finish --------------------'
+print '-------------------- END --------------------'
