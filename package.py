@@ -7,26 +7,36 @@ import shutil
 import zipfile
 import glob
 import fileutil
+import glob
 
-# 删除短时间内生成的TE_package文件夹，方便测试
-def clear():
-	# shutil.rmtree(OUTPATH)
-	return
 
 def init():
 	global TE_DEMO_PATH
 	global TE_SDK_PAGH
 	global RUNTIME
+	global OUTDIR
 	global OUTPATH
+	
+	global DOC_PATH4
 
 	TE_DEMO_PATH = r"D:\Android\eclipse-adt\workspace\TEDemo"
 	TE_SDK_PAGH = r"D:\Android\eclipse-adt\workspace\TESDK"
+	OUTDIR = r'C:\Users\gWX289620\Desktop'
 	RUNTIME = time.strftime('%m-%d_%H-%M-%S',time.localtime(time.time()))
-	OUTPATH = r'C:\Users\gWX289620\Desktop' + '\\' + 'TE_package_' + RUNTIME + '\\'
+	OUTPATH = OUTDIR + '\\' + 'TE_package_' + RUNTIME + '\\'
+	DOC_PATH4 = OUTDIR + '\\自测用例.xlsm'
 
 	print 'TEDemo	->	' + TE_DEMO_PATH if os.path.exists(TE_DEMO_PATH) else exit()
 	print 'TESDK	->	' + TE_SDK_PAGH if os.path.exists(TE_SDK_PAGH) else exit()
 	print 'outpath	->	' + OUTPATH
+
+
+# 删除短时间内生成的TE_package文件夹，方便测试
+def clear():
+	# shutil.rmtree(OUTPATH)
+	for dir_package in glob.glob(OUTDIR + '\\' + 'TE_package_*'):
+		print 'rmtree -> ' + dir_package
+		shutil.rmtree(dir_package)
 
 
 # 去掉TEDemo依赖项目TESDK的设置
@@ -45,6 +55,7 @@ def undepend():
 	gradle_item = 'compile project'
 	gradle_lines = fileutil.remove_file_item(gradle_file, gradle_item)
 
+
 # 复制&压缩相关项目文件，复制时去掉TEDemo中不需要压缩的目录
 def package():
 	ignore_these = ['.git', '.svn', '.idea', '.settings', 'bin','build',
@@ -57,8 +68,11 @@ def package():
 	# # 拷贝libs目录
 	shutil.copytree(TE_SDK_PAGH + "\\libs", OUTPATH + "eSDK_TP_TEMobile_1.5.50_Android")
 	# # 拷贝接口文档、开发指南、自测用例、转测excel
-	# shutil.copyfile(DOC_PATH4, OUTPATH + "自测用例.xlsm") 这个功能不支持中文文件名，暂时不添加
+	shutil.copyfile(DOC_PATH4.decode('utf8').encode('gbk'), (OUTPATH + "自测用例.xlsm").decode('utf8').encode('gbk'))
+	# 这个功能不支持中文文件名，暂时不添加
 	# 下次尝试调用cmd命令复制文件，来实现此功能
+	# os.system('copy ' + OUTDIR + '\\自测用例.xlsm ' + OUTPATH)
+
 	# # 压缩TEDemo
 	fileutil.zip(OUTPATH + "TEDemo", OUTPATH + "eSDK_TP_TEMobile_Demo_1.5.50_Android")
 	# # 考虑使用java原生的命令打.jar包
@@ -77,13 +91,17 @@ def test():
 	# os.system('am start -n com.huawei.te.example/com.huawei.te.example.activity.LoginActivity')
 	return
 
-if __name__ == '__main__':
+
+def main():
 	print '-------------------- Start ---------------------'
-	clear()
 	init()
+	clear()
 	undepend()
 	package()
 	redepend()
 	test()
 	print '-------------------- Finish --------------------'
 
+
+if __name__ == '__main__':
+	main()

@@ -1,9 +1,19 @@
 #coding=utf-8
 
 #-------------------------------------------------------------------------
+# 测试 操作包含中文的路径名/文件名
+#-------------------------------------------------------------------------
+# import os
+# print '中文'
+# str = 'copy ' + 'C:\\Users\\gWX289620\\Desktop' + '\\自测用例.xlsm ' + 'C:\\Users\\gWX289620\\Desktop\\TE_package_01-14_16-56-10'
+# os.system(str.decode('utf8').encode('gbk'))
+# shutil.copyfile(DOC_PATH4.decode('utf8').encode('gbk'), (OUTPATH + "自测用例.xlsm").decode('utf8').encode('gbk'))
+
+
+#-------------------------------------------------------------------------
 # 测试 import shutil
 #-------------------------------------------------------------------------
-import shutil
+# import shutil
 
 
 
