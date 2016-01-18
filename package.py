@@ -16,18 +16,38 @@ def init():
 	global RUNTIME
 	global OUTDIR
 	global OUTPATH
-	
-	global DOC_PATH4
+	global DOC1_PATH, DOC1_TO, DOC_NAME1
+	global DOC2_PATH, DOC2_TO, DOC_NAME2
+	global DOC3_PATH, DOC3_TO, DOC_NAME3
+	global DOC4_PATH, DOC4_TO, DOC_NAME4
 
 	TE_DEMO_PATH = r"D:\Android\eclipse-adt\workspace\TEDemo"
 	TE_SDK_PAGH = r"D:\Android\eclipse-adt\workspace\TESDK"
 	OUTDIR = r'C:\Users\gWX289620\Desktop'
 	RUNTIME = time.strftime('%m-%d_%H-%M-%S',time.localtime(time.time()))
 	OUTPATH = OUTDIR + '\\' + 'TE_package_' + RUNTIME + '\\'
-	DOC_PATH4 = OUTDIR + '\\自测用例.xlsm'
+
+	DOC_NAME1 = 'eSDK TE Mobile(Android) 接口参考.docx'
+	DOC_NAME2 = 'TE Android 登录语音视频呼叫开发指南.docx'
+	DOC_NAME3 = 'eSDK_TE_Android_V100R005C50版本转测试.xls'
+	DOC_NAME4 = '自测用例.xlsm'
+
+	# 初始化文档文件路径
+	DOC1_PATH = (OUTDIR + '\\' + DOC_NAME1)
+	DOC2_PATH = (OUTDIR + '\\' + DOC_NAME2)
+	DOC3_PATH = (OUTDIR + '\\' + DOC_NAME3)
+	DOC4_PATH = (OUTDIR + '\\' + DOC_NAME4)
+	DOC1_TO = OUTPATH + DOC_NAME1
+	DOC2_TO = OUTPATH + DOC_NAME2
+	DOC3_TO = OUTPATH + DOC_NAME3
+	DOC4_TO = OUTPATH + DOC_NAME4
 
 	print 'TEDemo	->	' + TE_DEMO_PATH if os.path.exists(TE_DEMO_PATH) else exit()
 	print 'TESDK	->	' + TE_SDK_PAGH if os.path.exists(TE_SDK_PAGH) else exit()
+	print 'DOC1_PATH	->	' + DOC1_PATH if os.path.exists(DOC1_PATH.decode('utf8').encode('gbk')) else exit()
+	print 'DOC2_PATH	->	' + DOC2_PATH if os.path.exists(DOC2_PATH.decode('utf8').encode('gbk')) else exit()
+	print 'DOC3_PATH	->	' + DOC3_PATH if os.path.exists(DOC3_PATH.decode('utf8').encode('gbk')) else exit()
+	print 'DOC4_PATH	->	' + DOC4_PATH if os.path.exists(DOC4_PATH.decode('utf8').encode('gbk')) else exit()
 	print 'outpath	->	' + OUTPATH
 
 
@@ -68,10 +88,10 @@ def package():
 	# # 拷贝libs目录
 	shutil.copytree(TE_SDK_PAGH + "\\libs", OUTPATH + "eSDK_TP_TEMobile_1.5.50_Android")
 	# # 拷贝接口文档、开发指南、自测用例、转测excel
-	shutil.copyfile(DOC_PATH4.decode('utf8').encode('gbk'), (OUTPATH + "自测用例.xlsm").decode('utf8').encode('gbk'))
-	# 这个功能不支持中文文件名，暂时不添加
-	# 下次尝试调用cmd命令复制文件，来实现此功能
-	# os.system('copy ' + OUTDIR + '\\自测用例.xlsm ' + OUTPATH)
+	shutil.copyfile(DOC1_PATH.decode('utf8').encode('gbk'), DOC1_TO.decode('utf8').encode('gbk'))
+	shutil.copyfile(DOC2_PATH.decode('utf8').encode('gbk'), DOC2_TO.decode('utf8').encode('gbk'))
+	shutil.copyfile(DOC3_PATH.decode('utf8').encode('gbk'), DOC3_TO.decode('utf8').encode('gbk'))
+	shutil.copyfile(DOC4_PATH.decode('utf8').encode('gbk'), DOC4_TO.decode('utf8').encode('gbk'))
 
 	# # 压缩TEDemo
 	fileutil.zip(OUTPATH + "TEDemo", OUTPATH + "eSDK_TP_TEMobile_Demo_1.5.50_Android")
