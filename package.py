@@ -76,6 +76,15 @@ def undepend():
 	gradle_lines = fileutil.remove_file_item(gradle_file, gradle_item)
 
 
+def jar():
+	# # 考虑使用java原生的命令打.jar包
+	# jar 命令打包的文件，加压其中包含META-INF
+	#	对照eclipse打包的jar文件，看是否也包含
+	os.chdir(TE_SDK_PAGH)
+	# os.system('jar cvf 文件名.jar 路径/ 文件.后缀')
+	print 'jar() is TODO...'
+
+
 # 复制&压缩相关项目文件，复制时去掉TEDemo中不需要压缩的目录
 def package():
 	ignore_these = ['.git', '.svn', '.idea', '.settings', 'bin','build',
@@ -95,7 +104,6 @@ def package():
 
 	# # 压缩TEDemo
 	fileutil.zip(OUTPATH + "TEDemo", OUTPATH + "eSDK_TP_TEMobile_Demo_1.5.50_Android")
-	# # 考虑使用java原生的命令打.jar包
 
 
 # 还原TEDemo依赖项目TESDK的设置
