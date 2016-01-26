@@ -24,7 +24,7 @@ def mkdir(path):
   return False
  
  
-
+# 没用上
 def replaceConfig(filename, item, content):
  input = open(filename)
  lines = input.readlines()
