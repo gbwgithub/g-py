@@ -12,7 +12,7 @@ import glob
 
 def init():
 	global USEING_ECLIPSE
-	USEING_ECLIPSE = True
+	USEING_ECLIPSE = False
 
 	global TE_DEMO_PATH
 	global TE_SDK_PAGH
@@ -28,8 +28,10 @@ def init():
 	global DOC3_PATH, DOC3_TO, DOC_NAME3
 	global DOC4_PATH, DOC4_TO, DOC_NAME4
 
-	TE_DEMO_PATH = r"D:\Android\eclipse-adt\workspace\TEDemo"
-	TE_SDK_PAGH = r"D:\Android\eclipse-adt\workspace\TESDK"
+	# TE_DEMO_PATH = r"D:\Android\eclipse-adt\workspace\TEDemo"
+	# TE_SDK_PAGH = r"D:\Android\eclipse-adt\workspace\TESDK"
+	TE_DEMO_PATH = r"D:\Android\TEWorkspace\TEDemo"
+	TE_SDK_PAGH = r"D:\Android\TEWorkspace\TESDK"
 	if USEING_ECLIPSE:
 		TE_SDK_BIN_PATH = TE_SDK_PAGH + r"\bin\classes"
 	else:
@@ -42,7 +44,7 @@ def init():
 	OUTPATH = OUTDIR + '\\' + 'TE_package_' + RUNTIME + '\\'
 	PACKAGE_PATH = OUTPATH + 'package\\'
 
-	DOC_NAME1 = 'eSDK TE Mobile(Android) 接口参考.docx'
+	DOC_NAME1 = 'eSDK TE Mobile V100R005C50 接口参考new (Android).doc'
 	DOC_NAME2 = 'TE Android 登录语音视频呼叫开发指南.docx'
 	DOC_NAME3 = 'eSDK_TE_Android_V100R005C50版本转测试.xls'
 	DOC_NAME4 = '自测用例.xlsm'
@@ -113,7 +115,7 @@ def jar():
 # 复制&压缩相关项目文件，复制时去掉了TEDemo中不需要压缩的目录
 def package():
 	ignore_these = ['.git', '.svn', '.idea', '.settings', 'bin','build',
-	'gen', 'libs/*', 'local.properties', 'projuard-project.txt', 'TEDemo.iml']
+	'gen', 'gradle' , 'libs/*', 'local.properties', 'projuard-project.txt', 'TEDemo.iml']
 	def ignore_most(folder, files):
 	    return ignore_these
 	# # 拷贝TEDemo工程
