@@ -6,33 +6,33 @@
 
 
 #-------------------------------------------------------------------------
-# 测试获取urllib.urlopen后的网页链接
+# 测试在获取urllib.urlopen后的网页中提取图片链接
 #-------------------------------------------------------------------------
-import urllib
-import re
+# import urllib
+# import re
 
-def getHtml(url):
-    page = urllib.urlopen(url)
-    html = page.read()
-    return html
+# def getHtml(url):
+#     page = urllib.urlopen(url)
+#     html = page.read()
+#     return html
 
-def getImg(html):
-    reg = r'src="(.+?\.jpg)" pic_ext'
-    imgre = re.compile(reg)
-    imglist = re.findall(imgre,html)
-    x = 0
-    for imgurl in imglist:
-    	# print imgurl
-        x+=1
+# def getImg(html):
+#     reg = r'src="(.+?\.jpg)" pic_ext'
+#     imgre = re.compile(reg)
+#     imglist = re.findall(imgre,html)
+#     x = 0
+#     for imgurl in imglist:
+#     	print imgurl
+#         x+=1
 
-html = getHtml("http://tieba.baidu.com/p/3102805968")
-print getImg(html)
+# html = getHtml("http://tieba.baidu.com/p/3102805968")
+# print getImg(html)
 
 
 
 
 #-------------------------------------------------------------------------
-# 测试urllib.urlopen
+# 测试urllib.urlopen.read()获取网页源码
 #-------------------------------------------------------------------------
 # import urllib
 
@@ -49,7 +49,7 @@ print getImg(html)
 
 
 #-------------------------------------------------------------------------
-# 爬虫 爬取网页图片
+# 爬虫  使用urllib.urlretrieve()下载爬取到的网页图片
 #-------------------------------------------------------------------------
 # import urllib
 # import re
