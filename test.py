@@ -1,12 +1,118 @@
 #coding=utf-8
 
+
+
+
+
+
+#-------------------------------------------------------------------------
+# 测试在获取urllib.urlopen后的网页中提取图片链接
+#-------------------------------------------------------------------------
+# import urllib
+# import re
+
+# def getHtml(url):
+#     page = urllib.urlopen(url)
+#     html = page.read()
+#     return html
+
+# def getImg(html):
+#     reg = r'src="(.+?\.jpg)" pic_ext'
+#     imgre = re.compile(reg)
+#     imglist = re.findall(imgre,html)
+#     x = 0
+#     for imgurl in imglist:
+#     	print imgurl
+#         x+=1
+
+# html = getHtml("http://tieba.baidu.com/p/3102805968")
+# print getImg(html)
+
+
+
+
+#-------------------------------------------------------------------------
+# 测试urllib.urlopen.read()获取网页源码
+#-------------------------------------------------------------------------
+# import urllib
+
+# # url = 'https://www.baidu.com/index.php?tn=monline_3_dg'
+# url = 'http://tieba.baidu.com/p/3102805968'
+ 
+# page = urllib.urlopen(url)
+# # print type(page)
+# # print dir(page)
+# # print page.geturl()
+# html = page.read()
+# print html
+
+
+
+#-------------------------------------------------------------------------
+# 爬虫  使用urllib.urlretrieve()下载爬取到的网页图片
+#-------------------------------------------------------------------------
+# import urllib
+# import re
+ 
+# def getHtml(url):
+#     page = urllib.urlopen(url)
+#     html = page.read()
+#     return html
+ 
+# def getImg(html):
+#     reg = r'src="(.+?\.jpg)" pic_ext'
+#     imgre = re.compile(reg)
+#     imglist = re.findall(imgre,html)
+#     x = 0
+#     for imgurl in imglist:
+#         urllib.urlretrieve(imgurl,'%s.jpg' % x)
+#         x+=1
+ 
+# html = getHtml("http://tieba.baidu.com/p/3102805968")
+# print getImg(html)
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# 定义类 以创建类对象
+#-------------------------------------------------------------------------
+#类定义  
+# class people:  
+#     #定义基本属性  
+#     name = ''  
+#     age = 0  
+#     #定义私有属性,私有属性在类外部无法直接进行访问  
+#     __weight = 0  
+#     #定义构造方法  
+#     def __init__(self,n,a,w):  
+#         self.name = n  
+#         self.age = a  
+#         self.__weight = w  
+#     def speak(self):  
+#         print("%s is speaking: I am %d years old" %(self.name,self.age))  
+  
+# p = people('tom',10,30)  
+# p.speak()  
+
+
+
+
+
+
+
+
+
 #-------------------------------------------------------------------------
 # 测试 os.system('jar cvf 文件名.jar 路径/ 文件.后缀') 效果
 #-------------------------------------------------------------------------
-import os
-# os.chdir(TE_SDK_PAGH)
-os.chdir(r"C:\Users\admin\Desktop\123")
-os.system('jar cvf ggg.jar .')
+# import os
+# # os.chdir(TE_SDK_PAGH)
+# os.chdir(r"C:\Users\admin\Desktop\123")
+# os.system('jar cvf ggg.jar .')
 
 
 
