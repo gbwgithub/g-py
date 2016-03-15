@@ -45,7 +45,7 @@ def init():
 	PACKAGE_PATH = OUTPATH + 'package\\'
 
 	DOC_NAME1 = 'eSDK TE Mobile V100R005C50 接口参考new (Android).doc'
-	DOC_NAME2 = 'TE Android 登录语音视频呼叫开发指南.docx'
+	DOC_NAME2 = 'eSDK TE Mobile V100R005C50开发指南(Andriod).doc'
 	DOC_NAME3 = 'eSDK_TE_Android_V100R005C50版本转测试.xls'
 	DOC_NAME4 = '自测用例.xlsm'
 
