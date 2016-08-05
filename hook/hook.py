@@ -1,15 +1,15 @@
 #coding=utf-8
 #!/usr/bin/env python
 
-#TODO 响应快捷键,调用其他函数复制时间，上传到GITHUB
+# 消息Hook随开机启动常驻，退出按键胜场两个shortcut 半退出开关只是控制是否记录日志，以及是否开启功能键
+# 添加功能键，结束所有非Hook.py的python进程
+# 写一个启动程序，一个测试程序，分开
 
 import pyHook
 import pythoncom
-import time
-import os
 import sys
-import logging
-import fileutil
+sys.path.append(r'F:\Python\projects\hook')
+import hook_handler
 
 def main():
 	# 初始化
@@ -25,91 +25,63 @@ def main():
 	pythoncom.PumpMessages()
 
 def init():
-	global EXIT_KEY
-	global TIME_COPY_KEY
-	global CTRL_KEY
-	global ALT_KEY
-	global COMBINE_KEYS_EXIT
-	global COMBINE_KEYS
-	global SHORTCUTS
-	global LOG_DIR
-	global LOG_FILE
-	CTRL_KEY = 'Lcontrol'
-	ALT_KEY = 'Lmenu'	#只有按下Ctrl键的同时按Alt键,才能Hook到'Lmenu'的'key down'消息,单独按Alt键时,Hook到的是'Lmenu'的'key sys down'消息
-	LOG_DIR = r'F:\Log'
-	LOG_FILE = LOG_DIR + r'\keyboard_hook.log'
 
-	EXIT_KEY = 'Numpad0'
-	COMBINE_KEYS_EXIT = (CTRL_KEY, ALT_KEY, EXIT_KEY)
-	TIME_COPY_KEY = 'Numpad1'
-	COMBINE_KEYS_TIME_COPY = (CTRL_KEY, ALT_KEY, TIME_COPY_KEY)
-
-	SHORTCUTS = {COMBINE_KEYS_EXIT:on_exit, COMBINE_KEYS_TIME_COPY:on_time_to_clipboard}
-	combin_keys_all = ()
-	for shortcut in SHORTCUTS:
-		combin_keys_all += shortcut
-	COMBINE_KEYS = set(combin_keys_all)
-
+	global shortcuts
+	global combine_keys_inclusion
 	global combine_record
+
+	ctrl_key = 'Lcontrol'
+	alt_key = 'Lmenu'	# 只有按下Ctrl键的同时按Alt键,才能Hook到'Lmenu'的'key down'消息,单独按Alt键时,Hook到的是'Lmenu'的'key sys down'消息
+	exit_key = 'Insert'		# 按下Shift键时，'Numpad0'键会变为'Insert'键
+	switch_key = 'Numpad0'
+	type_time_key = 'Numpad1'
+
+	combine_keys_exit = (ctrl_key, alt_key, exit_key)
+	combine_keys_switch = (ctrl_key, alt_key, switch_key)
+	combine_keys_time_type = (type_time_key,)
+
+	shortcuts = {	combine_keys_exit:hook_handler.on_exit, 
+					combine_keys_switch:hook_handler.on_switch, 
+					combine_keys_time_type:hook_handler.on_type_time}
+	combin_keys_repeat = []
+	for shortcut in shortcuts.keys():
+		combin_keys_repeat += shortcut
+	combine_keys_inclusion = set(combin_keys_repeat)
+
 	combine_record = {}
-	for key in COMBINE_KEYS:
+	for key in combine_keys_inclusion:
 		combine_record[key] = 0
 
-	fileutil.mkdir(LOG_DIR)
-	logging.basicConfig(level=logging.DEBUG,
-	                    format='%(asctime)s\t%(levelname)s %(filename)s %(funcName)s [line:%(lineno)d]\t%(message)s',
-	                    datefmt='%Y-%m-%d %H:%M:%S',
-	                    filename=LOG_FILE,		# 配置日志文件路径
-	                    filemode='a')
-
-def on_exit():
-	logging.info("_________________________________ exit _________________________________")
-	sys.exit()
-	pass
-
-def on_time_to_clipboard():
-	time_text = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
-	command = 'echo ' + time_text.strip() + '| clip'
-	os.system(command)
-	logging.info("copytime:" + time_text)
-	pass
-
 def on_key_down(event):
-	logging.debug("WindowName:" + event.WindowName)
-	logging.debug("MessageName:" + event.MessageName)
-	logging.debug("Key:" + event.Key)
-	logging.debug("---")
-	__check_key_event(event)
-	return True
+	hook_handler.__on_key_down(event)
+	return __check_key_event(event)
 
 def on_key_up(event):
-	logging.debug("MessageName:" + event.MessageName)
-	logging.debug("Key:" + event.Key)
-	logging.debug("---")
-	__check_key_event(event)
-	return True
+	hook_handler.__on_key_up(event)
+	return __check_key_event(event)
 
 def __check_key_event(event):
-	global COMBINE_KEYS
-	if(event.Key in COMBINE_KEYS):
-		__on_combine_keys(event)
+	if(event.Key in combine_keys_inclusion):
+		return __on_combine_keys(event)
+	return True
 
 def __on_combine_keys(event):
-	global combine_record
 	if('key up' == event.MessageName):
 		combine_record[event.Key] = 0
+		return True
 	elif('key down' == event.MessageName):
 		combine_record[event.Key] = 1
-		__check_shortcuts_record()
+		return __check_shortcuts_down()
+	else:
+		return True
 
-def __check_shortcuts_record():
-	global SHORTCUTS
-	for shortcut in SHORTCUTS.keys():
-		if(__check_shortcut(shortcut)):
-			SHORTCUTS[shortcut]()		# 执行快捷键操作
+def __check_shortcuts_down():
+	for shortcut in shortcuts.keys():
+		if(__check_shortcut_down(shortcut)):
+			return shortcuts[shortcut]()		# 执行快捷键操作
+	return True
 
-def __check_shortcut(shortcut):
-	global combine_record
+def __check_shortcut_down(shortcut):
 	for key in shortcut:
 		if(0 == combine_record[key]):
 			return False

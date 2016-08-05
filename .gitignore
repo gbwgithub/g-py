@@ -1,6 +1,7 @@
 # custom ignore
 .tags*
 .idea/
+*.pyc
 DLLS/
 Doc/
 LICENSE.txt
