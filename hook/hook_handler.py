@@ -21,16 +21,17 @@ def init():
 	                    format='%(asctime)s\t%(levelname)s %(filename)s %(funcName)s [line:%(lineno)d]\t%(message)s',
 	                    datefmt='%Y-%m-%d %H:%M:%S',
 	                    filename=log_file,		# 配置日志文件路径
-	                    filemode='w')
+	                    filemode='a')
+	logging.info(" start ".center(80, '_'))
 
 def on_exit():
-	logging.info("_________________________________ exit _________________________________")
+	logging.info(" exit ".center(80, '_'))
 	sys.exit()
 
 def on_switch():
 	global handler_switch
 	handler_switch = not handler_switch
-	logging.info("_________________________________switch:" + (handler_switch and "On" or "Off"))
+	logging.info(30 * "_" + "switch:" + (handler_switch and "On" or "Off"))
 	return True
 
 def on_type_time():

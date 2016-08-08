@@ -1,19 +1,308 @@
 # coding=utf-8
 # !/usr/bin/env python
 
-import time
-import _thread as thread
-
-def fun():
-	print('This running in new threadself.')
-	
-
-thread.start_new_thread(fun, ())
-time.sleep(1)
 
 
 #-------------------------------------------------------------------------
-# tkinter GUI
+# 123.vbs 执行CMD命令  createobject("wscript.shell").exec("calc")
+#-------------------------------------------------------------------------
+# print("在.vbs文件中,仅用下面一行命令即可执行cmd命令:")
+# print('createobject("wscript.shell").exec("calc")')
+# print("相较于.bat的好处是,没有弹框")
+
+
+
+
+#-------------------------------------------------------------------------
+# str.center()
+#-------------------------------------------------------------------------
+# switch = False
+# print(30 * "_" + "switch:" + (not switch and "On" or "Off"))
+# print(" exit ".center(80, '_'))
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# simple new thread!!!
+# threading.Thread(target=fun, args=(arg1,)).start()
+#-------------------------------------------------------------------------
+# import threading
+# from time import ctime,sleep
+
+# def music(func):
+#     for i in range(2):
+#         print ("I was listening to %s. %s" %(func,ctime()))
+#         sleep(1)
+
+# def move(func):
+#     for i in range(2):
+#         print ("I was at the %s! %s" %(func,ctime()))
+#         sleep(1)
+
+
+# if __name__ == '__main__':
+#     # music(u'爱情买卖')
+#     # move(u'阿凡达')
+#     threading.Thread(target=music, args=(u'爱情买卖',)).start()
+#     threading.Thread(target=move, args=(u'阿凡达',)).start()
+
+#     print ("end of story. %s" %ctime())
+
+
+
+
+#-------------------------------------------------------------------------
+# 实现了以前的一个想法:
+# 唯一标识线程,可以用(线程名+时间).hash()
+#-------------------------------------------------------------------------
+
+# import threading
+
+# def thread_main():
+# 	name = threading.currentThread().getName()
+# 	print(name)
+# 	print(threading.currentThread().getName().__hash__())
+# 	for x in range(10):
+# 		print(x)
+
+# threads = []
+# for x in range(5):
+# 	threads.append(threading.Thread(target=thread_main))
+# for t in threads:
+# 	t.start()
+
+
+
+
+#-------------------------------------------------------------------------
+# threading
+#-------------------------------------------------------------------------
+# import string, threading, time
+# import threading
+
+# def thread_main(a):
+# 	global count, mutex
+# 	# 获得线程名
+# 	threadname = threading.currentThread().getName()
+
+# 	for xx in range(0,10):
+# 		print(xx)
+
+# 	for x in range(0, int(a)):
+# 	    # 取得锁
+# 	    mutex.acquire()
+# 	    count = count + 1
+# 	    # 释放锁
+# 	    mutex.release()
+# 	    print (threadname, x, count)
+# 	    time.sleep(1)
+ 
+# def main(num):
+# 	global count, mutex
+# 	threads = []
+ 
+# 	count = 1
+# 	# 创建一个锁
+# 	mutex = threading.Lock()
+# 	# 先创建线程对象
+# 	for x in range(0, num):
+# 		threads.append(threading.Thread(target=thread_main, args=(10,)))
+# 	# 启动所有线程
+# 	for t in threads:
+# 		t.start()
+# 	# 主线程中等待所有子线程退出
+# 	for t in threads:
+# 		t.join() 
+ 
+ 
+# if __name__ == '__main__':
+# 	num = 4
+# 	# 创建4个线程
+# 	main(4)
+
+
+
+
+
+#-------------------------------------------------------------------------
+# print dir()
+#-------------------------------------------------------------------------
+# def g():
+# 	yield 1
+
+# i = g()
+# print([s for s in dir(i) if not s.startswith('_')])
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# classic yield !!  "Generate all combinations of k elements from list x."
+#-------------------------------------------------------------------------
+# def gcomb(x,k):
+# 	if k > len(x):
+# 		return
+# 	if k == 0:
+# 		yield []
+# 	else:
+# 		first, rest = x[0], x[1:]
+# 		for c in gcomb(rest, k-1):
+# 			c.insert(0,first)
+# 			yield c
+# 		for c in gcomb(rest, k):
+# 			yield c
+
+# l = range(1,6)
+# print(list(l))
+# for c in gcomb(l`1, 2):
+# 	print("", c)
+
+# seq = range(1,5)
+# for k in range(len(seq) + 2):
+# 	print("%d-combs of %s" % (k, seq))
+# 	for c in gcomb(seq, k):
+# 		print(" ", c)
+
+
+#-------------------------------------------------------------------------
+# yield
+# Ensure that explicitly raising StopIteration acts like any other exception
+# in try/except, not like a return.
+#-------------------------------------------------------------------------
+# def g():
+# 	yield 1
+# 	try:
+# 	    raise StopIteration
+# 	except:
+# 	    yield 2
+# 	yield 3
+
+# print (list(g()))
+
+
+
+#-------------------------------------------------------------------------
+# Guido's binary tree example.
+#-------------------------------------------------------------------------
+# class Tree:
+
+# 	def __init__(self, label, left=None, right=None):
+# 		self.label = label
+# 		self.left = left
+# 		self.right = right
+
+# 	def __repr__(self, level=0, indent="	"):
+# 		s = level*indent + repr(self.label)
+# 		if self.left:
+# 			s = s + "\\n" + self.left.__repr__(level+1, indent)
+# 		if self.right:
+# 			s = s + "\\n" + self.right.__repr__(level+1, indent)
+# 		return s
+
+# 	def __iter__(self):
+# 		return inorder(self)
+
+# def tree(list):
+# 	n = len(list)
+# 	if n == 0:
+# 		return []
+# 	i = n // 2
+# 	return Tree(list[i], tree(list[:i]), tree(list[i+1:]))
+
+# def inorder(t):
+# 		if t:
+# 			for x in inorder(t.left):
+# 				yield x
+# 			yield t.label
+# 			for x in inorder(t.right):
+# 				yield x
+
+# t = tree("ABCDEFG")
+# for x in inorder(t):
+# 	print (x)
+
+# print("t.label:", t.label)
+# print("t.left:", t.left)
+# print("t.right:", t.right)
+
+
+
+
+#-------------------------------------------------------------------------
+# yield generator:creator & caller
+#-------------------------------------------------------------------------
+# def yrange(n):
+# 	for i in range(n):
+# 		yield i
+
+# def creator():
+# 	r = yrange(5)
+# 	print ("creator", r.__next__())
+# 	return r
+
+# def caller():
+# 	r = creator()
+# 	for i in r:
+# 		print ('caller',i)
+
+# caller()
+
+
+
+
+#-------------------------------------------------------------------------
+# yield
+#-------------------------------------------------------------------------
+# def h():
+#     print ('Wen Chuan',)
+#     m = yield 5  # Fighting!
+#     print (m)
+#     d = yield 12
+#     print ('We are together!')
+# c = h()
+# m = c.__next__()  #m 获取了yield 5 的参数值 5
+# d = c.send('Fighting!')  #d 获取了yield 12 的参数值12
+# print ('We will never forget the date', m, '.', d)
+
+
+
+
+
+#-------------------------------------------------------------------------
+# ndict(zip(l1, l2))  用列表生成字典
+#-------------------------------------------------------------------------
+# l1 = [x for x in range(0,10)]
+# l2 = [x*x for x in range(0,10)]
+
+# z = zip(l1, li2)
+# dic = dict(z)
+# print (dic)
+
+
+
+
+#-------------------------------------------------------------------------
+# new thread
+#-------------------------------------------------------------------------
+
+# import time
+# import _thread as thread
+
+# def fun():
+# 	print('This running in new threadself.')
+	
+
+# thread.start_new_thread(fun, ())
+# time.sleep(1)
+
+
+#-------------------------------------------------------------------------
+# tkinter GUI  gui
 #-------------------------------------------------------------------------
 # from tkinter import *
 # root = Tk()

@@ -16,11 +16,11 @@ def mkdir(path):
  if not isExists:
   # 如果不存在则创建目录
   os.makedirs(path)
-  print path + ' makedirs success.'
+  # print path + ' makedirs success.'
   return True
  else:
   # 如果目录存在则不创建，并提示目录已存在
-  print path + ' already exits.'
+  # print path + ' already exits.'
   return False
  
  

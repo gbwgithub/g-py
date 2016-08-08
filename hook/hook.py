@@ -25,10 +25,7 @@ def main():
 	pythoncom.PumpMessages()
 
 def init():
-
-	global shortcuts
-	global combine_keys_inclusion
-	global combine_record
+	global shortcuts, combine_keys_inclusion, combine_record
 
 	ctrl_key = 'Lcontrol'
 	alt_key = 'Lmenu'	# 只有按下Ctrl键的同时按Alt键,才能Hook到'Lmenu'的'key down'消息,单独按Alt键时,Hook到的是'Lmenu'的'key sys down'消息
@@ -87,5 +84,7 @@ def __check_shortcut_down(shortcut):
 			return False
 	return True
 
-if __name__ == "__main__":   
+if __name__ == "__main__":
+
+
 	main()
