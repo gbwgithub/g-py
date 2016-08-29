@@ -21,7 +21,7 @@ def init():
 	                    format='%(asctime)s\t%(levelname)s %(filename)s %(funcName)s [line:%(lineno)d]\t%(message)s',
 	                    datefmt='%Y-%m-%d %H:%M:%S',
 	                    filename=log_file,		# 配置日志文件路径
-	                    filemode='a')
+	                    filemode='w')
 	logging.info(" start ".center(80, '_'))
 
 def on_exit():
@@ -40,6 +40,7 @@ def on_type_time():
 	time_text = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 	logging.info("type_time:" + time_text)
 	pykeyboard.PyKeyboard().type_string(time_text)
+	on_switch()
 	return False		#返回False 以拦截
 
 def __on_key_down(event):

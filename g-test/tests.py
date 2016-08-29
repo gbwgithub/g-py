@@ -4,11 +4,86 @@
 
 
 #-------------------------------------------------------------------------
-# 123.vbs 执行CMD命令  createobject("wscript.shell").exec("calc")
+
+#-------------------------------------------------------------------------
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# 多项赋值要这么写：
+# first,rest = x[0], x[1:]
+# 多项全局变量生命要这么写:
+# global a,b,c
+#-------------------------------------------------------------------------
+# global a,b,c
+# a,b,c = 1,2,3
+# print("a:",a)
+# print("b:",b)
+# print("c:",c)
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# !!!可变长度参数	def foo(arg1,*tupleArg,**dictArg):
+# 上面函数中的参数：
+#	tupleArg前面“*”表示这个参数是一个元组参数，从程序的输出可以看出，默认值为()；
+# 	dicrtArg前面有“**”表示这个字典参数(键值对参数)。
+#	可以把tupleArg、dictArg看成两个默认参数。多余的非关键字参数，函数调用时被放在元组参数tupleArg中；
+#	多余的关键字参数，函数调用时被放字典参数dictArg中
+#-------------------------------------------------------------------------
+# def foo(arg1,*tupleArg,**dictArg):
+# 	print ("arg1=",arg1)  #formal_args
+# 	print ("tupleArg=",tupleArg)  #()
+# 	print ("dictArg=",dictArg)    #[]
+
+# foo("formal_args")
+# print(5*'*')
+# foo(1,2,3,4,5,)
+# print(5*'*')
+# foo(5,6,7,8,a = 'ab', b = 'bc', c = 'cd', d = 'de')
+# print("\n\n")
+
+
+
+# 如果是函数定义中参数前的*表示的是将调用时的多个参数放入元组中,**则表示将调用函数时的关键字参数放入一个字典中
+# def foo(arg1,arg2="OK",*tupleArg,**dictArg):
+#     print ("arg1=",arg1)
+#     print ("arg2=",arg2)
+#     for i,element in enumerate(tupleArg):
+#         print ("tupleArg %d-->%s" % (i,str(element)))
+#     for  key in dictArg:
+#         print ("dictArg %s-->%s" %(key,dictArg[key]))
+
+# myList=["my1","my2"]
+# myDict={"name":"Tom","age":22}
+# foo("formal_args",arg2="argSecond",a=1)
+# print ("*"*40)
+# foo(123,myList,myDict)
+# print ("*"*40)
+# foo(123,rt=1234567890,*myList,**myDict)
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------
+# !!!  xxx.vbs 执行CMD命令  createobject("wscript.shell").exec("calc")
 #-------------------------------------------------------------------------
 # print("在.vbs文件中,仅用下面一行命令即可执行cmd命令:")
 # print('createobject("wscript.shell").exec("calc")')
 # print("相较于.bat的好处是,没有弹框")
+
+
 
 
 
