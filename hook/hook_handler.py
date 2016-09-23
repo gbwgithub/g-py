@@ -5,6 +5,7 @@ import time
 import thread
 import logging
 import pykeyboard
+import os
 import sys
 sys.path.append("F:\Python\projects\g-utils")
 import fileutil
@@ -40,6 +41,29 @@ def on_type_time():
 	time_text = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 	logging.info("type_time:" + time_text)
 	pykeyboard.PyKeyboard().type_string(time_text)
+	on_switch()
+	return False		#返回False 以拦截
+
+def on_type_html():
+	if not handler_switch:
+		return True
+	html_text = r'''<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+
+
+
+</body>
+</html>
+'''
+	logging.info("on_type_html()")
+	pykeyboard.PyKeyboard().type_string(html_text)
+	# command = 'echo ' + html_text.strip() + '| clip'
+	# os.system(command)
 	on_switch()
 	return False		#返回False 以拦截
 

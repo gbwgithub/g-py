@@ -1,5 +1,7 @@
 #coding=utf-8
 #!/usr/bin/env python
+# 启动 pythonw2 F:\Python\projects\hook\hook.py
+
 
 # 消息Hook随开机启动常驻，退出按键胜场两个shortcut 半退出开关只是控制是否记录日志，以及是否开启功能键
 # 添加功能键，结束所有非Hook.py的python进程
@@ -27,19 +29,23 @@ def main():
 def init():
 	global shortcuts, combine_keys_inclusion, combine_record
 
+	type_time_key = 'Numpad1'
+	type_html_key = 'Numpad2'
+
 	ctrl_key = 'Lcontrol'
 	alt_key = 'Lmenu'	# 只有按下Ctrl键的同时按Alt键,才能Hook到'Lmenu'的'key down'消息,单独按Alt键时,Hook到的是'Lmenu'的'key sys down'消息
 	exit_key = 'Insert'		# 按下Shift键时，'Numpad0'键会变为'Insert'键
 	switch_key = 'Numpad0'
-	type_time_key = 'Numpad1'
 
+	combine_keys_time_type = (type_time_key,)
+	combine_keys_html_type = (type_html_key,)
 	combine_keys_exit = (ctrl_key, alt_key, exit_key)
 	combine_keys_switch = (ctrl_key, alt_key, switch_key)
-	combine_keys_time_type = (type_time_key,)
 
 	shortcuts = {	combine_keys_exit:hook_handler.on_exit, 
 					combine_keys_switch:hook_handler.on_switch, 
-					combine_keys_time_type:hook_handler.on_type_time}
+					combine_keys_time_type:hook_handler.on_type_time,
+					combine_keys_html_type:hook_handler.on_type_html}
 	combin_keys_repeat = []
 	for shortcut in shortcuts.keys():
 		combin_keys_repeat += shortcut
