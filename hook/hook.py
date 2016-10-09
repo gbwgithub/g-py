@@ -1,11 +1,19 @@
-#coding=utf-8
+   #coding=utf-8
 #!/usr/bin/env python
+# 启动 F:\Python\projects\hook\hook_launch.vbs
 # 启动 pythonw2 F:\Python\projects\hook\hook.py
+# 启动 python2 F:\Python\projects\hook\hook.py
 
 
+# 搞一个pycharm的主题, 项目的话还是要在pycharm上开发的
+
+
+# 增加重启本程序快捷键	(用来在开发时快速验证,避免每次手工关闭与启动程序)
+# 增加Ctrl+;快捷键响应:效果为End	(这样就可以在敲代码时候使用Ctrl+; 与 ; 形成的组合来方便的为java代码行尾加分号了)
+# 增加Alt+ Back Space 响应,效果为Home    不需要了  Ctrl+Back Space  效果就是删除词语--有空行删除前边的空行
 # 消息Hook随开机启动常驻，退出按键胜场两个shortcut 半退出开关只是控制是否记录日志，以及是否开启功能键
-# 添加功能键，结束所有非Hook.py的python进程
 # 写一个启动程序，一个测试程序，分开
+# 添加功能键，结束所有非Hook.py的python进程
 
 import pyHook
 import pythoncom
@@ -29,8 +37,9 @@ def main():
 def init():
 	global shortcuts, combine_keys_inclusion, combine_record
 
-	type_time_key = 'Numpad1'
-	type_html_key = 'Numpad2'
+	type_time_key = 'Numpad1'	# 小键盘1
+	type_html_key = 'Numpad2'	# 小键盘2
+	analog_End_key = 'Oem_7'	# '键 (本来想用;键,但是type_time功能输出的:会导致错误发生,所以暂时先用'键)
 
 	ctrl_key = 'Lcontrol'
 	alt_key = 'Lmenu'	# 只有按下Ctrl键的同时按Alt键,才能Hook到'Lmenu'的'key down'消息,单独按Alt键时,Hook到的是'Lmenu'的'key sys down'消息
@@ -41,11 +50,14 @@ def init():
 	combine_keys_html_type = (type_html_key,)
 	combine_keys_exit = (ctrl_key, alt_key, exit_key)
 	combine_keys_switch = (ctrl_key, alt_key, switch_key)
+	combine_keys_End_analog = (ctrl_key, analog_End_key)
 
-	shortcuts = {	combine_keys_exit:hook_handler.on_exit, 
+	shortcuts = {	combine_keys_exit:hook_handler.on_reset, 
 					combine_keys_switch:hook_handler.on_switch, 
 					combine_keys_time_type:hook_handler.on_type_time,
-					combine_keys_html_type:hook_handler.on_type_html}
+					combine_keys_html_type:hook_handler.on_type_html,
+					combine_keys_End_analog:hook_handler.on_End_analog,
+					}
 	combin_keys_repeat = []
 	for shortcut in shortcuts.keys():
 		combin_keys_repeat += shortcut
@@ -91,6 +103,14 @@ def __check_shortcut_down(shortcut):
 	return True
 
 if __name__ == "__main__":
-
-
-	main()
+	try:
+		main()
+	except Exception as e:
+		# 尝试把Exception添加到Log
+		import time
+		time_text = time.strftime("%Y-%m-%d",time.localtime(time.time()))
+		programFileName = filename = __file__.split("\\")[-1]
+		logFileName = r"F:\Log" + "\\" + programFileName + time_text + r".log"
+		f = open(logFileName,'a')
+		f.write(str(e))
+		f.close()

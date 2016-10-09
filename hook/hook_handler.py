@@ -4,7 +4,7 @@
 import time
 import thread
 import logging
-import pykeyboard
+from pykeyboard import PyKeyboard
 import os
 import sys
 sys.path.append("F:\Python\projects\g-utils")
@@ -25,8 +25,27 @@ def init():
 	                    filemode='w')
 	logging.info(" start ".center(80, '_'))
 
-def on_exit():
-	logging.info(" exit ".center(80, '_'))
+def __on_key_down(event):
+	if not log_switch:
+		return True
+	logging.debug("WindowName:" + event.WindowName if event.WindowName else "None")
+	logging.debug("MessageName:" + event.MessageName)
+	logging.debug("Key:" + event.Key)
+	logging.debug("---")
+
+def __on_key_up(event):
+	if not log_switch:
+		return True
+	logging.debug("WindowName:" + event.WindowName if event.WindowName else "None")
+	logging.debug("MessageName:" + event.MessageName)
+	logging.debug("Key:" + event.Key)
+	logging.debug("---")
+
+
+def on_reset():
+	logging.info(" reset ".center(80, '_'))
+	command = 'F:\Python\projects\hook\hook_launch.vbs'
+	os.system(command)
 	sys.exit()
 
 def on_switch():
@@ -40,7 +59,7 @@ def on_type_time():
 		return True
 	time_text = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 	logging.info("type_time:" + time_text)
-	pykeyboard.PyKeyboard().type_string(time_text)
+	PyKeyboard().type_string(time_text)
 	on_switch()
 	return False		#返回False 以拦截
 
@@ -60,27 +79,28 @@ def on_type_html():
 </body>
 </html>
 '''
-	logging.info("on_type_html()")
-	pykeyboard.PyKeyboard().type_string(html_text)
+	html_text = 'not support html_text'
+ 	logging.info("on_type_html()")
+	PyKeyboard().type_string(html_text)
 	# command = 'echo ' + html_text.strip() + '| clip'
 	# os.system(command)
 	on_switch()
 	return False		#返回False 以拦截
 
-def __on_key_down(event):
-	if not log_switch:
-		return True
-	logging.debug("WindowName:" + event.WindowName)
-	logging.debug("MessageName:" + event.MessageName)
-	logging.debug("Key:" + event.Key)
-	logging.debug("---")
+def on_End_analog():
+	logging.info(30*'_' + " on_End_analog")
+	k = PyKeyboard()
+	#抬起功能按键Ctrl,否则End效果会变为Ctrl+End效果
+	k.release_key(k.control_key)
+	k.tap_key(k.end_key)
+	return False
 
-def __on_key_up(event):
-	if not log_switch:
-		return True
-	logging.debug("WindowName:" + event.WindowName)
-	logging.debug("MessageName:" + event.MessageName)
-	logging.debug("Key:" + event.Key)
-	logging.debug("---")
+def on_End_combo():
+	logging.info(30*'_' + " on_End_combo")
+	k = PyKeyboard()
+	#抬起功能按键Ctrl,否则End效果会变为Ctrl+End效果
+	k.release_key(k.control_key)
+	k.press_keys([k.end_key, ';', k.enter_key])
+	return False
 
 init()
