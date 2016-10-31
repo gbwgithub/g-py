@@ -3,6 +3,21 @@
 import os
 import zipfile
 
+# main函数捕获异常处理 -> 记录到日志等
+def main_except(e):
+    # 记录到日志 -> F:\Log\
+    import time
+    import os
+    import traceback
+    date_tag = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+    log_file = 'F:' + os.sep + 'Log' + os.sep + os.path.basename(__file__) + date_tag + '.log'
+    print(str(e) + '\n' + '记录到 -> ' + log_file)
+    f = open(log_file, 'a')
+    f.write(str(e) + '\n')
+    f.close()
+    traceback.print_exc()
+
+
 def mkdir(path):
  # 去除首位空格
  path=path.strip()

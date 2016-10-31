@@ -1,9 +1,11 @@
-   #coding=utf-8
+#coding=utf-8
 #!/usr/bin/env python
 # 启动 F:\Python\projects\hook\hook_launch.vbs
 # 启动 pythonw2 F:\Python\projects\hook\hook.py
 # 启动 python2 F:\Python\projects\hook\hook.py
 
+
+# 如果经常用tomcat的话, 写一个快捷键启动和关闭tomcat的
 
 # 搞一个pycharm的主题, 项目的话还是要在pycharm上开发的
 
@@ -106,11 +108,16 @@ if __name__ == "__main__":
 	try:
 		main()
 	except Exception as e:
-		# 尝试把Exception添加到Log
-		import time
-		time_text = time.strftime("%Y-%m-%d",time.localtime(time.time()))
-		programFileName = filename = __file__.split("\\")[-1]
-		logFileName = r"F:\Log" + "\\" + programFileName + time_text + r".log"
-		f = open(logFileName,'a')
-		f.write(str(e))
-		f.close()
+        # 记录到日志 -> F:\Log\
+        import time
+        import os
+        import traceback
+
+        date_tag = time.strftime("%Y-%m-%d", time.localtime(time.time()))
+        log_file = 'F:' + os.sep + 'Log' + os.sep + os.path.basename(__file__) + date_tag + '.log'
+        f = open(log_file, 'a')
+        f.write('\n' + 60 * '*' + '\n')
+        f.write(str(e) + '\n\n')
+        f.close()
+        traceback.print_exc(file=open(log_file, 'a'))
+        traceback.print_exc()
